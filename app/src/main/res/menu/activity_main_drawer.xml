@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_create"
+            android:icon="@drawable/ic_create"
+            android:title="Create Account" />
+
+        <item
+            android:id="@+id/nav_create_note"
+            android:icon="@drawable/ic_create_note"
+            android:title="Create Note" />
+
+
+        <item
+            android:id="@+id/nav_recent_clear"
+            android:icon="@drawable/ic_delete_recent"
+            android:title="Recent Clear" />
+        <item
+            android:id="@+id/nav_expected_chane"
+            android:icon="@drawable/ic_expected_change"
+            android:title="Decrease Expect Install" />
+
+        <item
+            android:id="@+id/nav_except_incre"
+            android:icon="@drawable/ic_except_incr"
+            android:title="Increase Expect Install" />
+
+
+    </group>
+
+</menu>

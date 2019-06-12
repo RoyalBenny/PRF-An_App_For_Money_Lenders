@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/materialGrey"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="25dp">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="100dp">
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:layout_marginBottom="425dp"
+                android:background="@color/colorGreen600"
+                app:cardBackgroundColor="@color/colorGreen600"
+                app:cardElevation="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/cardView3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="9dp"
+                    android:text="CREATE"
+                    android:textColor="@color/app"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="match_parent"
+                android:layout_height="453dp"
+                android:layout_marginEnd="41dp"
+                android:layout_marginStart="41dp"
+                android:layout_marginTop="80dp"
+                android:scrollbars="vertical"
+                app:cardElevation="7dp"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/nameText"
+                    android:layout_width="239dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/text_view_costum"
+                    android:ems="10"
+                    android:hint="Name"
+                    android:inputType="textCapWords"
+                    android:paddingLeft="4dp"
+                    android:textColorLink="@color/material"
+                    android:textSize="16sp"
+
+                    />
+
+                <EditText
+                    android:id="@+id/codeText"
+                    android:layout_width="239dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="70dp"
+                    android:background="@drawable/text_view_costum"
+                    android:ems="10"
+                    android:hint="Code"
+                    android:inputType="textCapCharacters"
+                    android:paddingLeft="4dp"
+                    android:textColorLink="@color/material"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/phoneText"
+                    android:layout_width="239dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="120dp"
+                    android:background="@drawable/text_view_costum"
+
+                    android:ems="10"
+                    android:hint="Phone"
+                    android:inputType="phone"
+                    android:paddingLeft="4dp"
+                    android:textColorLink="@color/material"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/amountText"
+                    android:layout_width="239dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="170dp"
+                    android:background="@drawable/text_view_costum"
+                    android:ems="10"
+                    android:hint="Amount"
+                    android:inputType="number"
+                    android:paddingLeft="4dp"
+                    android:textColorLink="@color/material"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/currentText"
+                    android:layout_width="239dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="220dp"
+                    android:ems="10"
+                    android:hint="Current Installment"
+                    android:background="@drawable/text_view_costum"
+                    android:inputType="number"
+                    android:paddingLeft="4dp"
+                    android:textColorLink="@color/material"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/expectedText"
+                    android:layout_width="239dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="270dp"
+                    android:background="@drawable/text_view_costum"
+                    android:ems="10"
+                    android:hint="Expect Installment"
+                    android:inputType="number"
+                    android:paddingLeft="4dp"
+                    android:textColorLink="@color/material"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/timeText"
+                    android:layout_width="239dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="320dp"
+                    android:ems="10"
+                    android:hint="Time"
+                    android:background="@drawable/text_view_costum"
+                    android:inputType="number"
+                    android:paddingLeft="4dp"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/saveButton"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/save_button2"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:text="Save"
+                    android:textColor="#FFFFFF"
+                    android:textSize="17sp"/>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+
+            </android.support.v7.widget.CardView>
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+</android.support.constraint.ConstraintLayout>
