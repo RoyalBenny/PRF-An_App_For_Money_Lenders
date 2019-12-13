@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ExpandableListView
 import android.widget.LinearLayout
 import android.widget.SearchView
 import io.reactivex.disposables.Disposable
@@ -29,13 +30,16 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
 
+
 var con :Context?=null
+
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     var search:SearchView?=null
     override  fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val menuInflater=menuInflater
         menuInflater.inflate(R.menu.search,menu)
         var string:String?= null
+
 
         val searchItem = menu?.findItem(R.id.search_view)
         search = searchItem?.actionView as SearchView
@@ -48,39 +52,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 string=newText
 
                 if(string?.length!=0) {
-                    val recyclerView=findViewById(R.id.recyclerView) as RecyclerView
-                    recyclerView.layoutManager= LinearLayoutManager(con!!, LinearLayout.VERTICAL,false)
+//                    val recyclerView=findViewById(R.id.recyclerView) as RecyclerView
+//                    recyclerView.layoutManager= LinearLayoutManager(con!!, LinearLayout.VERTICAL,false)
+//
+//
+                   var db=DatabaseClass(con!!)
+                   var data:ArrayList<Users> = arrayListOf()
+                   data = db.searchRecycle(string.toString())
+                   var globalObject= Globals.Chosen
+                   globalObject.globalList=data
+                   Collections.sort(globalObject.globalList)
+
+                    val expListView=findViewById<ExpandableListView>(R.id.expandableListView)
+                    listAdapter= ExpanadbleListAdapter(con!!, expListView,globalObject.returnGlobals(),2,globalObject.returnGlobals())
+                    expListView.setAdapter(listAdapter)
+                   var dateExpection = expection(con!!)
+
+//                    dateExpection.changeExpection()
+//                    var intent = intent
+//                    var context = this
+//
+//                    recyclerView.adapter = adapter
 
 
-                    var subscribe: Disposable?=null
-                    var db=DatabaseClass(con!!)
-                    var data:ArrayList<Users> = arrayListOf()
-                    data = db.searchRecycle(string.toString())
-                    Collections.sort(data)
-                    adapter = classAdapter(data)
-
-
-                    var dateExpection = expection(con!!)
-
-                    dateExpection.changeExpection()
-                    var intent = intent
-                    var context = this
-
-                    recyclerView.adapter = adapter
-                    adapter!!.notifyDataSetChanged()
-                    subscribe = adapter!!.clickEvent?.subscribe {
-                        var intent = Intent(con!!, Main3Activity::class.java)
-
-                        var db = recentDatabase(con!!)
-                        db.insertRecent(it.name)
-                        intent.putExtra("name", it.name)
-                        search!!.onActionViewCollapsed()
-                        startActivity(intent)
-                        this@MainActivity.finish()
-
-
-
-                    }
                 }
                 return true
         }
@@ -93,8 +87,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
 
-
-    var subscribe: Disposable?=null
 
     lateinit var bottomNavigation: BottomNavigationView
 
@@ -367,12 +359,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        subscribe?.dispose()
 
-
-    }
 
 }
 
