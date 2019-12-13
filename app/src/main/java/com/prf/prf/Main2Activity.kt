@@ -10,13 +10,17 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ExpandableListAdapter
 import android.widget.LinearLayout
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
+
 var adapterdate:dateAdapter?=null
 class Main2Activity : AppCompatActivity() {
 
@@ -29,39 +33,20 @@ class Main2Activity : AppCompatActivity() {
 
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item!!.itemId){
             R.id.detail_renew -> {
 
-                val builder=AlertDialog.Builder(this)
-                builder.setTitle("Renew")
-                builder.setMessage("Do you want to renew?")
-
-                builder.setPositiveButton("Yes", { dialogInterface: DialogInterface, i: Int ->
 
                     var intent=intent
 
                     var name=intent.getStringExtra("name")
-                    var db=DatabaseClass(this)
-                    db.renew(name)
-                    var user=db.search(name)
 
-
-                    var db2=database(this)
-                    db2.renew(name,user.time)
-
-
-                    val chosen= Globals.Chosen
-                    chosen.returnGlobals()!![userCurrentIx].current=0
-                    chosen.returnGlobals()!![userExpectInx].expected=0
-                    onBackPressed()
-
-
-                })
-
-                builder.setNegativeButton("No",{ dialogInterface: DialogInterface, i: Int -> })
-                builder.show()
+                    var intent2=Intent(applicationContext,RenewActivity::class.java)
+                    intent2.putExtra("name",name)
+                    intent2.putExtra("number",1.toString())
+                    startActivity(intent2)
+                    this.finish()
 
             }
             R.id.detail_delete ->{
@@ -88,7 +73,6 @@ class Main2Activity : AppCompatActivity() {
 
                 val chosen= Globals.Chosen
                 chosen.returnGlobals()!!.removeAt(userCurrentIx)
-                adapter!!.notifyDataSetChanged()
                 onBackPressed()
 
 
@@ -113,7 +97,7 @@ class Main2Activity : AppCompatActivity() {
         var intent=intent
 
         var name=intent.getStringExtra("name")
-        var index=intent.getStringExtra("index").toString().toInt()
+//        var index=intent.getStringExtra("index").toString().toInt()
         completedText.visibility=View.INVISIBLE
         completeTick.visibility= View.INVISIBLE
         val db= DatabaseClass(this)
@@ -121,7 +105,7 @@ class Main2Activity : AppCompatActivity() {
        nameView.text=user.name
         codeView.text="{${user.code}}"
        phoneView.text=user.phone
-        currentView.text="${user.current} - ${user.expected}"
+        currentView.text="${user.current+1} - ${user.expected}"
         amountView.text=user.amount.toString()
         val db2=database(this)
 
@@ -143,10 +127,19 @@ class Main2Activity : AppCompatActivity() {
 
         val chosen = Globals.Chosen
         var datas = chosen.returnGlobals()
+        amountText.setOnKeyListener { v, keyCode, event ->
+
+            if (keyCode== KeyEvent.KEYCODE_ENTER){
+                okButton?.performClick()
+            }
+
+            return@setOnKeyListener false
+        }
+var click=1
         okButton.setOnClickListener {
             if(amountText.text.length!=0) {
                 var amount = amountText.text.toString().toInt()
-                if ((amount != 0) && (amount % (user.amount / user.time) == 0)) {
+                if ((amount != 0) && (amount % (user.amount / user.time) == 0) && click==1) {
                     var startIx = user.current
                     var endIx = user.current + (amount / (user.amount / user.time))
 
@@ -163,18 +156,17 @@ class Main2Activity : AppCompatActivity() {
 
                     if ((startIx <= user.time) && (endIx <= user.time)) {
                         db.update(user.name, endIx)
-                        Snackbar.make(okButton,"Changed to $endIx",Snackbar.LENGTH_LONG).show()
+                        click=2
+                        Snackbar.make(okButton,"Changed to ${endIx+1}",Snackbar.LENGTH_LONG).show()
                     }
                     var userUpdate = db.search(name)
                     nameView.text=user.name
                     codeView.text="{${user.code}}"
                     phoneView.text=user.phone
-                    currentView.text="${userUpdate.current} - ${userUpdate.expected}"
+                    currentView.text="${userUpdate.current+1} - ${userUpdate.expected}"
                     amountView.text=user.amount.toString()
 
-                    chosen.returnGlobals()!![index].current = userUpdate.current
-
-
+                    chosen.returnGlobals()!![userCurrentIx].current = userUpdate.current
                     if (userUpdate.current == user.time) {
                         okButton.visibility = View.INVISIBLE
                         amountText.visibility = View.INVISIBLE
@@ -183,8 +175,14 @@ class Main2Activity : AppCompatActivity() {
 
 
                     }
-                } else {
-                    Snackbar.make(okButton,"Please Enter Correct Amount", Snackbar.LENGTH_LONG).show()
+                    amountText.text.clear()
+                }else if(click==2){
+                    amountText.text.clear()
+                    Snackbar.make(okButton,"Amount already entered", Snackbar.LENGTH_SHORT).show()
+
+                }
+                else {
+                    Snackbar.make(okButton,"Please Enter Correct Amount", Snackbar.LENGTH_SHORT).show()
                 }
 
 
@@ -199,13 +197,9 @@ class Main2Activity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-//       var intent= Intent(this,ViewActivity::class.java)
-         var ob= databaseList()
 
-        adapter!!.notifyDataSetChanged()
-
+        listAdapter!!.notifyDataSetChanged()
         super.onBackPressed()
-//        startActivity(intent)
 
     }
 
