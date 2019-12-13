@@ -17,7 +17,7 @@ val DAY="Sunday"
 class expection(var context: Context):SQLiteOpenHelper(context, DATABASE_NAME_EXPECTION,null,1){
     override fun onCreate(db: SQLiteDatabase?) {
 
-        var expectionDatabase="CREATE TABLE IF NOT EXISTS $TABLE_NAME_EXPECTION ($DAY INTEGER)"
+        val expectionDatabase="CREATE TABLE IF NOT EXISTS $TABLE_NAME_EXPECTION ($DAY INTEGER)"
 
         db?.execSQL(expectionDatabase)
 
@@ -36,7 +36,7 @@ class expection(var context: Context):SQLiteOpenHelper(context, DATABASE_NAME_EX
 
     fun changeExpection(){
 
-        var calender=java.util.Calendar.getInstance()
+        val calender=java.util.Calendar.getInstance()
         var day=calender.get(java.util.Calendar.DAY_OF_WEEK)
         var cv =ContentValues()
         var db= this.writableDatabase
@@ -55,6 +55,8 @@ class expection(var context: Context):SQLiteOpenHelper(context, DATABASE_NAME_EX
             data.updateExpection()
 
         }
+
+        cursor.close()
     }
 
 
