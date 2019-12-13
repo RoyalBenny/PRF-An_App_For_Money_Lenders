@@ -8,18 +8,21 @@ import android.support.v4.view.MenuItemCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
+import android.widget.ExpandableListView
 import android.widget.LinearLayout
 import android.widget.SearchView
 import android.widget.Toast
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.list_view.view.*
 import java.util.*
+import kotlin.collections.ArrayList
 
-var adapter : classAdapter?= null
+var listAdapter:ExpanadbleListAdapter? =null
 class homeFragment : Fragment() {
-    var subscribe: Disposable?=null
 
     lateinit var searchView:SearchView
-
+     var recyclerView:RecyclerView?=null
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -46,53 +49,29 @@ class homeFragment : Fragment() {
 
 
 
-        adapter=classAdapter( globalObject.globalList!!)
-
-
-
+//        adapter=classAdapter( globalObject.globalList!!,2)
+//
         val rootView=inflater.inflate(R.layout.fragment_home, container, false)
+//
+//
+//        recyclerView=rootView.findViewById(R.id.recyclerView) as RecyclerView
+//
+//
+//        recyclerView!!.layoutManager= LinearLayoutManager(activity)
+//
+//        recyclerView!!.adapter = adapter
+        val expListView=rootView.findViewById<ExpandableListView>(R.id.expandableListView)
 
-        val recyclerView=rootView.findViewById(R.id.recyclerView) as RecyclerView
+        listAdapter=ExpanadbleListAdapter(con!!,expListView,datas!!,2,datas)
 
-
-
-        recyclerView.layoutManager= LinearLayoutManager(activity)
-        recyclerView.adapter = adapter
-
-
-
-
-        subscribe=adapter!!.clickEvent?.subscribe {
-           var intent = Intent(con!!, Main2Activity::class.java)
-            intent.putExtra("index",data.indexOf(it).toString())
-           intent.putExtra("name", it.name)
-
-            recentDataStore.insertRecent(it.name)
-
-           startActivity(intent)
-
-        }
-
-
-
-
-
-
+        expListView.setAdapter(listAdapter)
         return rootView
 
 
 
-
     }
+    
 
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        subscribe?.dispose()
-
-
-    }
 
 }
 
