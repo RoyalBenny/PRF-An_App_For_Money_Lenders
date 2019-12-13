@@ -190,12 +190,17 @@ class DatabaseClass(var context :Context):SQLiteOpenHelper(context, Database_Nam
         db.delete(Table_Name, Username_Col+" =?", arrayOf(name))
     }
 
-    fun renew(name: String){
+    fun renew(users: Users){
         var db=this.writableDatabase
         var cv=ContentValues()
-        cv.put(Current_Col,0)
-        cv.put(Expected_Col,0)
-        db.update(Table_Name,cv, Username_Col+" =?" , arrayOf(name))
+        cv.put(Username_Col,users.name)
+        cv.put(Code_Col, users.code)
+        cv.put(Phone_Col,users.phone)
+        cv.put(Amount_Col,users.amount)
+        cv.put(Current_Col,users.current)
+        cv.put(Expected_Col,users.expected)
+        cv.put(Time_Col,users.time)
+        db.update(Table_Name,cv, Username_Col+" =?" , arrayOf(users.name))
     }
 
     fun holiday(){
