@@ -32,34 +32,15 @@ class Main3Activity : AppCompatActivity() {
         when(item!!.itemId){
             R.id.detail_renew -> {
 
-                val builder= AlertDialog.Builder(this)
-                builder.setTitle("Renew")
-                builder.setMessage("Do you want to renew?")
+                var intent=intent
 
-                builder.setPositiveButton("Yes", { dialogInterface: DialogInterface, i: Int ->
+                var name=intent.getStringExtra("name")
 
-                    var intent=intent
-
-                    var name=intent.getStringExtra("name")
-                    var db=DatabaseClass(this)
-                    db.renew(name)
-                    var user=db.search(name)
-
-
-                    var db2=database(this)
-                    db2.renew(name,user.time)
-
-
-                    val chosen= Globals.Chosen
-                    chosen.returnGlobals()!![userCurrentIx].current=0
-                    chosen.returnGlobals()!![userExpectInx].expected=0
-                    onBackPressed()
-
-
-                })
-
-                builder.setNegativeButton("No",{ dialogInterface: DialogInterface, i: Int -> })
-                builder.show()
+                var intent2=Intent(applicationContext,RenewActivity::class.java)
+                intent2.putExtra("name",name)
+                intent2.putExtra("number",2.toString())
+                startActivity(intent2)
+                this.finish()
 
             }
             R.id.detail_delete ->{
@@ -86,7 +67,6 @@ class Main3Activity : AppCompatActivity() {
 
                     val chosen= Globals.Chosen
                     chosen.returnGlobals()!!.removeAt(userCurrentIx)
-                    adapter!!.notifyDataSetChanged()
                     onBackPressed()
 
 
@@ -174,8 +154,6 @@ class Main3Activity : AppCompatActivity() {
                     phoneView.text=user.phone
                     currentView.text="${userUpdate.current} - ${userUpdate.expected}"
                     amountView.text=user.amount.toString()
-
-                    chosen.returnGlobals()!![userCurrentIx].current = userUpdate.current
 
 
                     if (userUpdate.current == user.time) {
