@@ -14,13 +14,7 @@ class Users:Comparable<Users> {
     var time:Int=0
 
     constructor(name:String,code:String,phone:String,amount:Int,current:Int,expected:Int,time:Int){
-        this.name=name
-        this.code=code
-        this.phone=phone
-        this.amount=amount
-        this.current=current
-        this.expected=expected
-        this.time=time
+
     }
     constructor(){
 
