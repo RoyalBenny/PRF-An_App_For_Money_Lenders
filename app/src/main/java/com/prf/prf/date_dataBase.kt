@@ -98,12 +98,19 @@ class database(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,n
         db.delete(TABLE_NAME, USER_NAME+" =?", arrayOf(name))
     }
 
-    fun renew(name: String,time: Int){
+    fun renew(name: String,time: Int,current:Int){
         val db=this.writableDatabase
         var cv= ContentValues()
-        for (i in 1..time){
+
+        if(current!=0){
+        for (i in current+1..time){
             cv.put("COL_$i","-")
         }
-        db.update(TABLE_NAME,cv, USER_NAME+" =?", arrayOf(name))
+        }else {
+            for (i in 1..time) {
+                cv.put("COL_$i", "-")
+            }
+        }
+            db.update(TABLE_NAME,cv, USER_NAME+" =?", arrayOf(name))
     }
 }
